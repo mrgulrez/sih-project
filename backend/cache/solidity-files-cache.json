@@ -1,14 +1,13 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\Gulrez Alam\\sih-project\\backend\\contracts\\DocumentVerification.sol": {
-      "lastModificationDate": 1733900142008,
-      "contentHash": "d2de9d68e0b6c2cf4e07ad9e1ffe3a21",
+    "C:\\Users\\Gulrez Alam\\SIH-HACK\\backend\\contracts\\DocumentVerification.sol": {
+      "lastModificationDate": 1733606519805,
+      "contentHash": "a9ee797ec4d2d43d7e7d0f8d147ad2cb",
       "sourceName": "contracts/DocumentVerification.sol",
       "solcConfig": {
-        "version": "0.8.28",
+        "version": "0.8.0",
         "settings": {
-          "evmVersion": "paris",
           "optimizer": {
             "enabled": false,
             "runs": 200

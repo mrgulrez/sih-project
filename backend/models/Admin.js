@@ -22,12 +22,4 @@ AdminSchema.pre('save', async function(next) {
   next();
 });
 
-let AdminModel;
-
-try {
-  AdminModel = mongoose.model('Admin');
-} catch (error) {
-  AdminModel = mongoose.model('Admin', AdminSchema);
-}
-
-export default AdminModel;
+export default mongoose.model('Admin', AdminSchema);

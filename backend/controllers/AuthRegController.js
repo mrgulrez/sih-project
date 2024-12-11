@@ -1,5 +1,4 @@
 import AuthReg from "../models/AuthReg.js";
-import IndReg from "../models/IndReg.js";
 import nodemailer from "nodemailer";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -46,9 +45,7 @@ export const sendVerificationEmail = async (req, res) => {
       },
     });
 
-
-    const verificationUrl = `https://sih-hack-a7xz.onrender.com/verify-email?token=${token}`;
-   // const verificationUrl = `http://localhost:5173/verify-email?token=${token}`;
+    const verificationUrl = `http://localhost:5173/verify-email?token=${token}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: officialEmail,
@@ -67,56 +64,30 @@ export const sendVerificationEmail = async (req, res) => {
   }
 };
 
+// Verify email and update user status
 export const verifyEmail = async (req, res) => {
   const { token } = req.query;
 
   try {
-    // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded)
+    const user = await AuthReg.findOne({
+      officialEmail: decoded.officialEmail,
+      verificationToken: token,
+    });
 
-    // Check if the decoded token contains necessary info like officialEmail and role
-    if (!decoded) {
-      return res.status(400).json({ message: "Invalid token" });
-    }
-
-    // Define an array of models to search
-    const models = [AuthReg, IndReg];
-
-    let user = null;
-
-    // Use a for loop to check both models
-    for (let i = 0; i < models.length; i++) {
-      user = await models[i].findOne({
-        officialEmail: decoded.officialEmail,
-        verificationToken: token,
-      });
-
-      if (user) {
-        break; // Stop searching once the user is found
-      }
-    }
-
-    // If no user is found, return an error
-    if (!user) {
+    if (!user)
       return res.status(400).json({ message: "Invalid or expired token" });
-    }
 
-    // Update user verification status
     user.isVerified = true;
-    user.verificationToken = undefined; // Remove the verification token after successful verification
+    user.verificationToken = undefined; // Remove the token after verification
     await user.save();
 
-    // Send success response with the appropriate redirect URL
+    // Send success response with redirect URL
     res.status(200).json({
       message: "Email verified successfully.",
-      redirectUrl:
-        decoded.role === "individual"
-          ? "/"
-          : `/complete-reg?userID=${user._id}`,
+      redirectUrl: `/complete-reg?userID=${user._id}`, // Redirect URL after successful email verification
     });
   } catch (error) {
-    console.error("Error during verification:", error);
     res
       .status(500)
       .json({ message: "Error verifying email", error: error.message });
@@ -160,6 +131,7 @@ export const updateUserDetails = async (req, res) => {
   }
 };
 
+
 export const login = async (req, res) => {
   const { officialEmail, password } = req.body;
   const { userType } = req.params; // Get userType from URL params
@@ -169,43 +141,32 @@ export const login = async (req, res) => {
     const user = await AuthReg.findOne({ officialEmail, role: userType });
 
     if (!user) {
-      return res.status(400).json({
-        message: "User not found or incorrect user type",
-        status: null,
-      });
+      return res.status(400).json({ message: 'User not found or incorrect user type', status: null });
     }
 
     // Check if the user status is approved
-    if (user.status !== "approved") {
-      return res.status(400).json({
-        message: "Registration request not approved yet",
-        status: user.status,
-        userID: user._id,
-      });
+    if (user.status !== 'approved') {
+      return res.status(400).json({ message: 'Registration request not approved yet', status: user.status, userID:user._id });
     }
 
     // Compare the password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ message: "Invalid credentials" });
+      return res.status(400).json({ message: 'Invalid credentials' });
     }
 
     // Generate a JWT token
-    const token = jwt.sign(
-      { id: user._id, officialEmail: user.officialEmail },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "3h", // Token expires in 1 hour
-      }
-    );
+    const token = jwt.sign({ id: user._id, officialEmail: user.officialEmail }, process.env.JWT_SECRET, {
+      expiresIn: '3h', // Token expires in 1 hour
+    });
 
     // Send success response and redirect URL based on the user type
     res.status(200).json({
-      message: "Login successful",
+      message: 'Login successful',
       redirectUrl: `/${userType}-dashboard`, // Redirect based on user type (admin, issuing-auth, etc.)
       token,
     });
   } catch (error) {
-    res.status(500).json({ message: "Error logging in", error: error.message });
+    res.status(500).json({ message: 'Error logging in', error: error.message });
   }
 };

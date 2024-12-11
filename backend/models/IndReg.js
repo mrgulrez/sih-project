@@ -1,25 +1,14 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
 
-// Define the Admin Schema with email, password, and role fields
-const AdminSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },  // Email field
-  password: { type: String, required: true },  // Password field (hashed)
-  role: { type: String, default: 'admin' }  // Role field with default value 'admin'
+const indRegSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  dob: { type: Date, required: true },
+  officialEmail: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  uniqueID: { type: String, required: true, unique: true },
+  verificationToken: { type: String },
+  isVerified: { type: Boolean, default: false },
+  status: { type: String, default: 'pending' },  // Status: pending until email is verified
 });
 
-// Compare the entered password with the hashed password in the database
-AdminSchema.methods.comparePassword = function(password) {
-  return bcrypt.compare(password, this.password);
-};
-
-// Pre-save hook to hash the password before saving
-AdminSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();  // Only hash password if it's modified
-
-  // Hash the password before saving
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-export default mongoose.model('Admin', AdminSchema);
+export default mongoose.model('IndReg', indRegSchema);
