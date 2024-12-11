@@ -1,0 +1,41 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\Gulrez Alam\\sih-project\\backend\\contracts\\DocumentVerification.sol": {
+      "lastModificationDate": 1733900142008,
+      "contentHash": "d2de9d68e0b6c2cf4e07ad9e1ffe3a21",
+      "sourceName": "contracts/DocumentVerification.sol",
+      "solcConfig": {
+        "version": "0.8.28",
+        "settings": {
+          "evmVersion": "paris",
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.0"
+      ],
+      "artifacts": [
+        "DocumentVerification"
+      ]
+    }
+  }
+}

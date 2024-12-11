@@ -1,25 +1,26 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 
-// Define the Admin Schema with email, password, and role fields
-const AdminSchema = new mongoose.Schema({
-  email: { type: String, required: true, unique: true },  // Email field
-  password: { type: String, required: true },  // Password field (hashed)
-  role: { type: String, default: 'admin' }  // Role field with default value 'admin'
-});
+// Middleware to check if the user is authenticated and has the correct role
+const verifyRole = (roles) => {
+  return (req, res, next) => {
+    const token = req.headers["authorization"]?.split(" ")[1]; // Extract token from header
+    if (!token) {
+      return res.status(401).json({ message: "No token provided, access denied." });
+    }
 
-// Compare the entered password with the hashed password in the database
-AdminSchema.methods.comparePassword = function(password) {
-  return bcrypt.compare(password, this.password);
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify token
+      req.user = decoded; // Attach decoded user info to request object
+
+      // Check if the user's role is allowed to access this route
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({ message: "Forbidden: You do not have permission to access this route." });
+      }
+      next(); // User is authenticated and authorized, proceed to next middleware or route handler
+    } catch (err) {
+      return res.status(401).json({ message: "Invalid or expired token." });
+    }
+  };
 };
 
-// Pre-save hook to hash the password before saving
-AdminSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();  // Only hash password if it's modified
-
-  // Hash the password before saving
-  this.password = await bcrypt.hash(this.password, 10);
-  next();
-});
-
-export default mongoose.model('Admin', AdminSchema);
+export { verifyRole };
