@@ -57,8 +57,9 @@ const LoginPage = () => {
         toast.error(error.response?.data?.message || "Login failed");
       } else if (error.response?.data?.status !== "approved") {
         toast.error(error.response?.data?.message);
+       // alert("Redirecting to the dashboard...");
         setTimeout(() => {
-          navigate(`/complete-reg?userID=${error.response?.data?.userID}`);
+          navigate(`/`);
         }, 2000);
         return;
       }
