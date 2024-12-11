@@ -35,8 +35,7 @@ export const registerIndividual = async (req, res) => {
       uniqueID,
       verificationToken,
       isVerified: false,
-      status: 'pending', // Status is pending until email is verified
-      role: 'individual'  
+      status: 'pending',  // Status is pending until email is verified
     });
 
     await newUser.save();
@@ -50,9 +49,7 @@ export const registerIndividual = async (req, res) => {
       },
     });
 
-
-    const verificationUrl = `https://sih-hack-a7xz.onrender.com/api/individual/verify-email?token=${verificationToken}`;
-   // const verificationUrl = `http://localhost:5000/api/individual/verify-email?token=${verificationToken}`;
+    const verificationUrl = `http://localhost:5000/api/individual/verify-email?token=${verificationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
@@ -118,7 +115,7 @@ export const login = async (req, res) => {
   
       // Generate JWT token
       const token = jwt.sign(
-        { id: user._id, officialEmail: user.officialEmail, role: user.role },
+        { id: user._id, officialEmail: user.officialEmail },
         process.env.JWT_SECRET,
         { expiresIn: '1h' } // Token expires in 1 hour
       );

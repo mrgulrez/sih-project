@@ -1,4 +1,27 @@
-.env
+/uploads/*
+!/uploads/.gitkeep
+
+#/uploads/*: Ignores all files inside the uploads folder.
+#!/uploads/.gitkeep: Excludes a special placeholder file (.gitkeep) from being ignored.
+
+
+
+
+node_modules
 /node_modules
-node_modules/
-/build
+.env
+
+# Hardhat files
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+
+# solidity-coverage files
+/coverage
+/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337

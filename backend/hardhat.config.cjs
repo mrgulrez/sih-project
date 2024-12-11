@@ -2,7 +2,7 @@ require("@nomiclabs/hardhat-ethers");
 require("dotenv").config();
 
 module.exports = {
-  solidity: "0.8.28",
+  solidity: "0.8.0",
   networks: {
     amoy: {
       url: process.env.RPC_URL, // RPC URL for AMOY testnet
