@@ -50,7 +50,9 @@ export const registerIndividual = async (req, res) => {
       },
     });
 
-    const verificationUrl = `http://localhost:5000/api/individual/verify-email?token=${verificationToken}`;
+
+    const verificationUrl = `http://sih-project-fw73/api/individual/verify-email?token=${verificationToken}`;
+   // const verificationUrl = `http://localhost:5000/api/individual/verify-email?token=${verificationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
