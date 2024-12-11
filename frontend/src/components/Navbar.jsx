@@ -60,7 +60,7 @@ const Navbar = () => {
     
     setTimeout(() => {
       navigate("/");
-      //window.location.reload();
+      window.location.reload();
     }, 1200);
   };
 

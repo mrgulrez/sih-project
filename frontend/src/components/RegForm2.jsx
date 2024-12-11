@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { FaBuilding, FaUserTie, FaPhone, FaMapMarkerAlt, FaFileAlt, FaRegCheckCircle } from "react-icons/fa";
+import { FaBuilding, FaUserTie, FaPhone,  FaFileAlt, FaRegCheckCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Form2 = () => {
@@ -47,7 +47,8 @@ const Form2 = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Details updated successfully! Registration request submitted.");
-      navigate("/"); // Redirect to home
+      window.location.reload();
+      navigate("/");
     } catch (error) {
       toast.error(`Error: ${error.response?.data?.message || error.message}`);
     }
