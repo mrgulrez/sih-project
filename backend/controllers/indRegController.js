@@ -24,7 +24,7 @@ export const registerIndividual = async (req, res) => {
     const uniqueID = generateUniqueID();
 
     // Generate verification token
-    const verificationToken = jwt.sign({ email, uniqueID }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const verificationToken = jwt.sign({ officialEmail: email, uniqueID, role: "individual" }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // Save the user with status as "pending" until verified
     const newUser = new IndReg({
@@ -35,7 +35,8 @@ export const registerIndividual = async (req, res) => {
       uniqueID,
       verificationToken,
       isVerified: false,
-      status: 'pending',  // Status is pending until email is verified
+      status: 'pending', 
+      role: 'individual'  
     });
 
     await newUser.save();
@@ -63,32 +64,6 @@ export const registerIndividual = async (req, res) => {
   }
 };
 
-// Verify email
-export const verifyEmail = async (req, res) => {
-  const { token } = req.query;
-  // console.log(token);
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
-    const user = await IndReg.findOne({ officialEmail: decoded.email, verificationToken: token });
-
-    if (!user) return res.status(400).json({ message: 'Invalid or expired token' });
-    console.log(user)
-    // Update user status to verified
-    user.isVerified = true;
-    user.verificationToken = undefined;
-    user.status = 'approved';  // Set status to 'approved'
-    await user.save();
-
-    res.status(200).json({
-      message: 'Email verified successfully. You can close this tab and login now.'
-    });
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ message: 'Error verifying email', error: error.message });
-  }
-};
 
 export const login = async (req, res) => {
     const { officialEmail, password } = req.body;
@@ -115,7 +90,7 @@ export const login = async (req, res) => {
   
       // Generate JWT token
       const token = jwt.sign(
-        { id: user._id, officialEmail: user.officialEmail },
+        { id: user._id, officialEmail: user.officialEmail, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: '1h' } // Token expires in 1 hour
       );
