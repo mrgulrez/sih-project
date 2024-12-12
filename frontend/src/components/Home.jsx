@@ -208,7 +208,7 @@ const Home = () => {
           </motion.h1>
           
           {/* Typewriter Effect */}
-          <div className="text-xl md:text-2xl text-gray-700 mb-8 h-20">
+          <div className="text-xl md:text-2xl text-gray-700 mb-8 h-20 text-yellow-500">
             <TypeAnimation
               sequence={[
                 "Secure Document Management",
