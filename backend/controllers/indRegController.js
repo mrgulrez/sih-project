@@ -7,7 +7,7 @@ import IndReg from '../models/IndReg.js';  // Assuming you have this model for i
 const generateUniqueID = () => {
   return `DL${Math.floor(Math.random() * 10000)}`;  // Generate ID like "DL324324"
 };
-api
+
 // Register individual
 export const registerIndividual = async (req, res) => {
   const { name, dob, email, password } = req.body;

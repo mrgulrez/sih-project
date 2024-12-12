@@ -30,6 +30,11 @@ const FeatureCard = ({ icon: Icon, title, description }) => (
   </motion.div>
 );
 
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 1 } }
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const [isRegisterOpen, setRegisterOpen] = useState(false);
@@ -350,6 +355,167 @@ const Home = () => {
           />
         </div>
       </div>
+
+      <motion.section
+        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img
+            className="object-cover object-center rounded"
+            alt="hero"
+            src="https://www.financialexpress.com/business/blockchain-synergising-forces-uniting-blockchain-and-ai-for-secure-tech-advancements-3208095"
+          />
+        </motion.div>
+        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <motion.h1
+            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
+            whileHover={{ scale: 1.1 }}
+          >
+            Smart, Secure, Decentralized
+            <br className="hidden lg:inline-block" />Document Verification
+          </motion.h1>
+          <p className="mb-8 leading-relaxed">
+            Say goodbye to manual processes and hello to automated, tamper-proof document verification. <strong>DocLedger</strong> leverages AI and Blockchain to ensure integrity, security, and efficiency in every verification step.
+          </p>
+        </div>
+      </motion.section>
+
+      {/* Features Section */}
+      <motion.section
+        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+      >
+        <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+          <motion.h1
+            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
+            whileHover={{ scale: 1.1 }}
+          >
+            Built for Simplicity
+            <br className="hidden lg:inline-block" />Designed for Security
+          </motion.h1>
+          <p className="mb-8 leading-relaxed">
+            From issuing authorities to end-users, <strong>DocLedger</strong> offers intuitive role-based dashboards that streamline workflows and guarantee data authenticity. Automate processes, protect sensitive data, and scale effortlessly.
+          </p>
+        </div>
+        <motion.div
+          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img
+            className="object-cover object-center rounded"
+            alt="features"
+            src="https://dummyimage.com/720x600"
+          />
+        </motion.div>
+      </motion.section>
+
+      {/* Roles Section */}
+      <motion.section
+        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img
+            className="object-cover object-center rounded"
+            alt="roles"
+            src="https://dummyimage.com/720x600"
+          />
+        </motion.div>
+        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <motion.h1
+            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
+            whileHover={{ scale: 1.1 }}
+          >
+            Seamless Experiences for Everyone
+          </motion.h1>
+          <p className="mb-8 leading-relaxed">
+            <strong>Issuing Authorities:</strong> Securely upload and hash documents on the blockchain.<br />
+            <strong>Verifying Authorities:</strong> Validate user-submitted documents in real-time with AI.<br />
+            <strong>Individuals:</strong> Access, view, and share your verified documents with ease.
+          </p>
+        </div>
+      </motion.section>
+
+      {/* Benefits Section */}
+      <motion.section
+        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+      >
+        <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+          <motion.h1
+            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
+            whileHover={{ scale: 1.1 }}
+          >
+            Why Choose DocLedger?
+          </motion.h1>
+          <p className="mb-8 leading-relaxed">
+            <strong>Enhanced Security:</strong> Blockchain and AI ensure zero compromises on data integrity.<br />
+            <strong>Time Savings:</strong> Automated workflows minimize manual errors and delays.<br />
+            <strong>Scalability:</strong> Adapt to growing needs with batch uploads and decentralized storage.<br />
+            <strong>User-Friendly Design:</strong> A clean interface for smooth navigation across roles.
+          </p>
+        </div>
+        <motion.div
+          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img
+            className="object-cover object-center rounded"
+            alt="benefits"
+            src="https://dummyimage.com/720x600"
+          />
+        </motion.div>
+      </motion.section>
+
+      {/* Technology Section */}
+      <motion.section
+        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
+      >
+        <motion.div
+          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0"
+          whileHover={{ scale: 1.05 }}
+        >
+          <img
+            className="object-cover object-center rounded"
+            alt="tech stack"
+            src="https://dummyimage.com/720x600"
+          />
+        </motion.div>
+        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
+          <motion.h1
+            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
+            whileHover={{ scale: 1.1 }}
+          >
+            Powered by Leading Technologies
+          </motion.h1>
+          <p className="mb-8 leading-relaxed">
+            <strong>Frontend:</strong> React.js for dynamic and responsive user interfaces.<br />
+            <strong>Backend:</strong> Node.js for high-performance server-side logic.<br />
+            <strong>AI:</strong> TensorFlow and Google Vision API for advanced fraud detection.<br />
+            <strong>Blockchain:</strong> Ethereum for immutable document storage.<br />
+            <strong>Storage:</strong> IPFS for decentralized, secure file management.
+          </p>
+        </div>
+      </motion.section>
+          
     </div>
   );
 };
