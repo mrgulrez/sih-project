@@ -29,6 +29,8 @@ const AuthRegSchema = new mongoose.Schema({
   verificationToken: { type: String, required: false }, // Token for email verification
   verificationTokenExpires: { type: Date, required: false }, // Expiration time for the token
   isVerified: { type: Boolean, default: false }, // Flag to check if email is verified
+  otp: { type: String, required: false }, // OTP for two-factor authentication
+  otpExpires: { type: Date, required: false }, // Expiration time for the OTP
 });
 
 export default mongoose.model("AuthReg", AuthRegSchema);
