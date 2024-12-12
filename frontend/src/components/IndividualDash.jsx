@@ -1,121 +1,222 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import toast from "react-hot-toast"; // For notifications
-import { jsPDF } from "jspdf"; // Import jsPDF for PDF generation
+import { 
+  FileText, 
+  Download, 
+  Eye, 
+  Search,
+} from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
+import { jsPDF } from "jspdf";
 
-const IndividualDashboard = () => {
+const IndividualDocumentDashboard = () => {
+  // State management
+  const [documents, setDocuments] = useState([]);
+  const [filteredDocuments, setFilteredDocuments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+
+  // Unique ID from local storage
   const uniqueID = localStorage.getItem("userUniqueID");
-  const [documents, setDocuments] = useState([]); // Store documents data
-  const [message, setMessage] = useState(""); // Message for notifications
 
-  // Fetch documents associated with the uniqueID
+  // Fetch documents on component mount
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(
           `http://localhost:5000/api/documents/${uniqueID}`
         );
-        setDocuments(response.data); // Set the fetched documents
+        setDocuments(response.data);
+        setFilteredDocuments(response.data);
+        setIsLoading(false);
       } catch (error) {
-        setMessage("Error fetching documents");
         toast.error("Error fetching documents");
+        setIsLoading(false);
       }
     };
-    fetchDocuments();
+
+    if (uniqueID) {
+      fetchDocuments();
+    }
   }, [uniqueID]);
 
-  // Function to handle the document viewing process
+  // Document view handler
   const handleViewDocument = (ipfsLink) => {
     if (ipfsLink) {
-      const link = `https:/${ipfsLink}`;
-      window.open(link, "_blank"); // Open the IPFS link in a new tab
+      try {
+        const link = `https://${ipfsLink}`;
+        window.open(link, "_blank", "noopener,noreferrer");
+      } catch (error) {
+        toast.error("Unable to open document");
+      }
     } else {
-      toast.error("IPFS link not available");
+      toast.error("Document link is not available");
     }
   };
 
-  const handleDownloadDocument = (certificateType, ipfsLink) => {
-    if (ipfsLink) {
+  // Document download handler
+  const handleDownloadDocument = async (certificateType, ipfsLink) => {
+    if (!ipfsLink) {
+      toast.error("Document link unavailable");
+      return;
+    }
+
+    try {
       const link = `https://${ipfsLink}`;
+      const response = await axios.get(link, { responseType: "arraybuffer" });
+      const byteArray = new Uint8Array(response.data);
 
-      axios
-        .get(link, { responseType: "arraybuffer" })
-        .then((response) => {
-          const byteArray = new Uint8Array(response.data);
-          const base64Image = arrayBufferToBase64(byteArray); // Convert byteArray to base64
-
-          const pdf = new jsPDF();
-          pdf.addImage(byteArray, "JPEG", 10, 10, 180, 160); // Add image to PDF
-          pdf.save(`${certificateType}.pdf`);
-        })
-        .catch((error) => {
-          console.error("Error downloading document", error);
-        });
+      const pdf = new jsPDF();
+      pdf.addImage(byteArray, "JPEG", 10, 10, 180, 160);
+      pdf.save(`${certificateType}_${new Date().toISOString().split('T')[0]}.pdf`);
+      
+      toast.success("Document downloaded successfully!");
+    } catch (error) {
+      toast.error("Download failed");
     }
   };
 
-  // Convert the array buffer to a base64 string for images
-  const arrayBufferToBase64 = (arrayBuffer) => {
-    let binary = "";
-    let bytes = new Uint8Array(arrayBuffer);
-    let length = bytes.byteLength;
+  // Search and filter handler
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
 
-    for (let i = 0; i < length; i++) {
-      binary += String.fromCharCode(bytes[i]);
-    }
+    const filtered = documents.filter(doc => 
+      doc.certificateType.toLowerCase().includes(term) &&
+      (filterType === "all" || doc.status === filterType)
+    );
 
-    return window.btoa(binary); // Convert binary data to base64
+    setFilteredDocuments(filtered);
+  };
+
+  // Filter handler
+  const handleFilter = (status) => {
+    setFilterType(status);
+
+    const filtered = documents.filter(doc => 
+      doc.certificateType.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (status === "all" || doc.status === status)
+    );
+
+    setFilteredDocuments(filtered);
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="w-full max-w-lg bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between mb-4">
-          <h2 className="text-2xl text-rose-950 font-light">
-            Documents Issued
-          </h2>
-          <span className="text-lg text-gray-600">{uniqueID}</span>{" "}
-          {/* Display Unique ID */}
-        </div>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <Toaster position="top-right" />
 
-        {/* Display list of documents */}
-        <div className="space-y-4">
-          {documents.length === 0 ? (
-            <p>No documents available for this unique ID.</p>
-          ) : (
-            documents.map((doc, index) => (
-              <div
-                key={index}
-                className="flex justify-between items-center border-b py-2"
-              >
-                <span className="text-sm text-gray-800">
-                  {index + 1}. {doc.certificateType}
-                </span>
-                <div className="space-x-2">
+      <div className="container mx-auto">
+        <div className="bg-white shadow-md rounded-lg">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-6 rounded-t-lg">
+            <div className="flex justify-between items-center">
+              <h1 className="text-3xl font-semibold text-white">
+                My Documents
+              </h1>
+              <div className="bg-white/20 text-white px-4 py-2 rounded-full">
+                <span className="text-sm font-medium">ID: {uniqueID}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Search and Filter Section */}
+          <div className="p-6 border-b">
+            <div className="flex space-x-4">
+              <div className="relative flex-grow">
+                <input 
+                  type="text" 
+                  placeholder="Search documents..." 
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <Search className="absolute left-3 top-3 text-gray-400" />
+              </div>
+              <div className="flex space-x-2">
+                {["all", "verified", "pending"].map((status) => (
                   <button
-                    onClick={() => handleViewDocument(doc.ipfsLink)}
-                    className="bg-blue-600 text-white py-1 px-3 rounded-md hover:bg-blue-700"
+                    key={status}
+                    onClick={() => handleFilter(status)}
+                    className={`
+                      px-4 py-2 rounded-lg capitalize 
+                      ${filterType === status 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-200 text-gray-700'}
+                    `}
                   >
-                    View Document
+                    {status}
                   </button>
-                  <button
-                    onClick={() =>
-                      handleDownloadDocument(doc.certificateType, doc.ipfsLink)
-                    }
-                    className="bg-green-600 text-white py-1 px-3 rounded-md hover:bg-green-700"
-                  >
-                    Download Document
-                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Document List */}
+          <div className="p-6">
+            {isLoading ? (
+              <div className="text-center py-8">
+                <div className="animate-spin inline-block w-8 h-8 border-[3px] border-current border-t-transparent text-blue-600 rounded-full" role="status">
+                  <span className="sr-only">Loading...</span>
                 </div>
               </div>
-            ))
-          )}
+            ) : filteredDocuments.length === 0 ? (
+              <div className="text-center py-8 text-gray-500">
+                <FileText className="mx-auto w-16 h-16 text-gray-300 mb-4" />
+                <p>No documents found</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {filteredDocuments.map((doc, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between bg-gray-100 p-4 rounded-lg hover:bg-gray-200 transition-colors"
+                  >
+                    <div className="flex items-center space-x-4">
+                      <FileText className="text-blue-600 w-10 h-10" />
+                      <div>
+                        <h3 className="text-lg font-semibold">{doc.certificateType}</h3>
+                        <p className="text-sm text-gray-600">
+                          Issued: {new Date(doc.issuedDate).toLocaleDateString()}
+                        </p>
+                        <span 
+                          className={`
+                            inline-block px-2 py-1 rounded-full text-xs mt-1
+                            ${doc.status === 'verified' 
+                              ? 'bg-green-200 text-green-800' 
+                              : 'bg-yellow-200 text-yellow-800'}
+                          `}
+                        >
+                          {doc.status}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => handleViewDocument(doc.ipfsLink)}
+                        className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors"
+                        title="View Document"
+                      >
+                        <Eye className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => handleDownloadDocument(doc.certificateType, doc.ipfsLink)}
+                        className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition-colors"
+                        title="Download Document"
+                      >
+                        <Download className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-
-        {message && <p className="mt-4 text-center text-blue-700">{message}</p>}
       </div>
     </div>
   );
 };
 
-export default IndividualDashboard;
+export default IndividualDocumentDashboard;
