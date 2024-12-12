@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { FaUser, FaCalendarAlt, FaEnvelope, FaLock, FaRegCheckCircle } from 'react-icons/fa';

@@ -73,6 +73,7 @@ export const registerIndividual = async (req, res) => {
   }
 };
 
+
 export const login = async (req, res) => {
   const { officialEmail, password } = req.body;
 

@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-textract": "^3.709.0",
     "axios": "^1.7.9",
     "crypto-js": "^4.2.0",
-    "cryptojs": "^2.5.3",
+
     "framer-motion": "^11.13.5",
     "jspdf": "^2.5.2",
     "jszip": "^3.10.1",
