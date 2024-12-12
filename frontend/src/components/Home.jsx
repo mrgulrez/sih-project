@@ -12,6 +12,12 @@ import {
 } from "react-icons/fi";
 import { TypeAnimation } from "react-type-animation";
 import bgImage from "../assets/bg2.png";
+import img1 from "../assets/img1.jpeg";
+import img2 from "../assets/img2.jpeg";
+import img3 from "../assets/img3.jpeg";
+import img4 from "../assets/img4.jpeg";
+
+
 import axios from "axios";
 
 const FeatureCard = ({ icon: Icon, title, description }) => (
@@ -369,7 +375,7 @@ const Home = () => {
           <img
             className="object-cover object-center rounded"
             alt="hero"
-            src="https://www.financialexpress.com/business/blockchain-synergising-forces-uniting-blockchain-and-ai-for-secure-tech-advancements-3208095"
+            src={img1}
           />
         </motion.div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
@@ -412,7 +418,7 @@ const Home = () => {
           <img
             className="object-cover object-center rounded"
             alt="features"
-            src="https://dummyimage.com/720x600"
+            src={img2}
           />
         </motion.div>
       </motion.section>
@@ -431,7 +437,7 @@ const Home = () => {
           <img
             className="object-cover object-center rounded"
             alt="roles"
-            src="https://dummyimage.com/720x600"
+            src= {img3}
           />
         </motion.div>
         <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
@@ -477,43 +483,9 @@ const Home = () => {
           <img
             className="object-cover object-center rounded"
             alt="benefits"
-            src="https://dummyimage.com/720x600"
+            src={img4}
           />
         </motion.div>
-      </motion.section>
-
-      {/* Technology Section */}
-      <motion.section
-        className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center"
-        variants={fadeIn}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0"
-          whileHover={{ scale: 1.05 }}
-        >
-          <img
-            className="object-cover object-center rounded"
-            alt="tech stack"
-            src="https://dummyimage.com/720x600"
-          />
-        </motion.div>
-        <div className="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
-          <motion.h1
-            className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900"
-            whileHover={{ scale: 1.1 }}
-          >
-            Powered by Leading Technologies
-          </motion.h1>
-          <p className="mb-8 leading-relaxed">
-            <strong>Frontend:</strong> React.js for dynamic and responsive user interfaces.<br />
-            <strong>Backend:</strong> Node.js for high-performance server-side logic.<br />
-            <strong>AI:</strong> TensorFlow and Google Vision API for advanced fraud detection.<br />
-            <strong>Blockchain:</strong> Ethereum for immutable document storage.<br />
-            <strong>Storage:</strong> IPFS for decentralized, secure file management.
-          </p>
-        </div>
       </motion.section>
           
     </div>
