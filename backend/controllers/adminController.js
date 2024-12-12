@@ -114,6 +114,7 @@ export const loginAdmin = async (req, res) => {
           message: "Login successful",
           token,
           redirectUrl: "/admin-dashboard",
+          role: "admin"
         });
     } else {
       return res.status(400).json({ message: "Incorrect password" });

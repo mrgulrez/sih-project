@@ -71,7 +71,6 @@ export const verifyEmail = async (req, res) => {
   try {
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
 
     // Check if the decoded token contains necessary info like officialEmail and role
     if (!decoded) {

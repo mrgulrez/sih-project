@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
 import toast from "react-hot-toast"; // For notifications
 import { jsPDF } from "jspdf"; // Import jsPDF for PDF generation
 

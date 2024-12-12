@@ -48,6 +48,7 @@ const RegFormInd = () => {
       // Redirect to the login page (or individual URL) upon successful registration
       navigate('/login/individual');  // Redirect to login page or change '/login' to '/individual' as needed
     } catch (error) {
+      console.log(error);
       setMessage(`Error: ${error.message}`);
       toast.error(`Error: ${error.message}`);
     } finally {

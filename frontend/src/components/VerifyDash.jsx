@@ -334,6 +334,7 @@ const VerifyDash = () => {
         let processedFiles = 0;
   
         for (const fileName of Object.keys(contents.files)) {
+          console.log('fileName', fileName)
           const file = contents.files[fileName];
           if (!file.dir) {
             const fileContent = await file.async('blob');
