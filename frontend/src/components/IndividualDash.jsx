@@ -26,7 +26,7 @@ const IndividualDocumentDashboard = () => {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          `http://localhost:5000/api/documents/${uniqueID}`
+          `https://sih-project-xtmx.onrender.com/api/documents/${uniqueID}`
         );
         setDocuments(response.data);
         setFilteredDocuments(response.data);
