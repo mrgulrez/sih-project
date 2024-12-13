@@ -43,7 +43,7 @@ const Form2 = () => {
     });
 
     try {
-      await axios.post("http://localhost:5000/api/auth/update-details", formData, {
+      await axios.post("https://sih-project-xtmx.onrender.com/api/auth/update-details", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       toast.success("Details updated successfully! Registration request submitted.");
