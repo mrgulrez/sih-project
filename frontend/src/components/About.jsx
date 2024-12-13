@@ -33,7 +33,7 @@ const TeamMemberModal = ({ member, onClose }) => (
         <h2 className="text-2xl font-bold text-blue-900">{member.name}</h2>
         <p className="text-blue-700 mb-4">{member.role}</p>
         <p className="text-gray-600 text-center">
-          A dedicated team member bringing passion and expertise to our organization.
+          A dedicated team member bringing passion and expertise to our team.
         </p>
       </div>
     </div>
