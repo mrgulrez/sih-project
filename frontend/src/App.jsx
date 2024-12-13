@@ -12,6 +12,7 @@ import IndividualDash from "./components/IndividualDash";
 import EmailVerification from "./components/EmailVerification";
 import RegFormInd from "./components/RegFormInd";
 import ProtectedRoute from "./components/ProtectedRoute";
+import About from "./components/About.jsx";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about/*" element={<About />} />
         <Route path="/register/authority" element={<RegForm1 />} />
         <Route path="/register/individual" element={<RegFormInd />} />
         <Route path="/complete-reg" element={<RegForm2 />} />
