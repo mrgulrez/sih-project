@@ -18,13 +18,13 @@
 
 //     // Determine the endpoint based on user type
 //     if (userType === "issuing-auth") {
-//       endpoint = "http://localhost:5000/api/auth/login/issuing-auth";
+//       endpoint = "https://sih-project-xtmx.onrender.com/api/auth/login/issuing-auth";
 //     } else if (userType === "verifying-auth") {
-//       endpoint = "http://localhost:5000/api/auth/login/verifying-auth";
+//       endpoint = "https://sih-project-xtmx.onrender.com/api/auth/login/verifying-auth";
 //     } else if (userType === "individual") {
-//       endpoint = "http://localhost:5000/api/individual/login";
+//       endpoint = "https://sih-project-xtmx.onrender.com/api/individual/login";
 //     } else if (userType === "admin") {
-//       endpoint = "http://localhost:5000/api/admin/login";
+//       endpoint = "https://sih-project-xtmx.onrender.com/api/admin/login";
 //     } else {
 //       toast.error("Invalid user type");
 //       return;
@@ -153,13 +153,13 @@ const LoginPage = () => {
 
     // Determine the endpoint based on user type
     if (userType === "issuing-auth") {
-      endpoint = "http://localhost:5000/api/auth/login/issuing-auth";
+      endpoint = "https://sih-project-xtmx.onrender.com/api/auth/login/issuing-auth";
     } else if (userType === "verifying-auth") {
-      endpoint = "http://localhost:5000/api/auth/login/verifying-auth";
+      endpoint = "https://sih-project-xtmx.onrender.com/api/auth/login/verifying-auth";
     } else if (userType === "individual") {
-      endpoint = "http://localhost:5000/api/individual/login";
+      endpoint = "https://sih-project-xtmx.onrender.com/api/individual/login";
     } else if (userType === "admin") {
-      endpoint = "http://localhost:5000/api/admin/login";
+      endpoint = "https://sih-project-xtmx.onrender.com/api/admin/login";
     } else {
       toast.error("Invalid user type");
       return;
@@ -176,7 +176,7 @@ const LoginPage = () => {
 
         if (response.data.role !== "admin") {
           // Trigger OTP sending
-          await axios.post("http://localhost:5000/api/otp/send-otp", {
+          await axios.post("https://sih-project-xtmx.onrender.com/api/otp/send-otp", {
             officialEmail,
           });
 
@@ -201,7 +201,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/otp/verify-otp",
+        "https://sih-project-xtmx.onrender.com/api/otp/verify-otp",
         {
           officialEmail,
           otp,
