@@ -76,7 +76,7 @@ const UploadDash = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/documents/upload",
+        "https://sih-project-xtmx.onrender.com/api/documents/upload",
         formData,
         {
           headers: {
