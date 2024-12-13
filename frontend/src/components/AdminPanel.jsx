@@ -12,7 +12,7 @@ const AdminPanel = () => {
   const fetchRequests = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/requests"
+        "https://sih-project-xtmx.onrender.com/api/admin/requests"
       );
       setRequests(response.data);
     } catch (error) {
@@ -23,7 +23,7 @@ const AdminPanel = () => {
   const handleApprove = async (id) => {
     try {
       await axios.patch(
-        `http://localhost:5000/api/admin/requests/approve/${id}`
+        `https://sih-project-xtmx.onrender.com/api/admin/requests/approve/${id}`
       );
       fetchRequests(); // Refresh the list
     } catch (error) {
@@ -34,7 +34,7 @@ const AdminPanel = () => {
   const handleReject = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:5000/api/admin/requests/reject/${id}`
+        `https://sih-project-xtmx.onrender.com/api/admin/requests/reject/${id}`
       );
       fetchRequests(); // Refresh the list
     } catch (error) {
@@ -69,7 +69,7 @@ const AdminPanel = () => {
                     request.documents.map((document, index) => (
                       <li key={index}>
                         <a
-                          href={`http://localhost:5000/uploads/${document}`}
+                          href={`https://sih-project-xtmx.onrender.com/uploads/${document}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-blue-500 underline"
