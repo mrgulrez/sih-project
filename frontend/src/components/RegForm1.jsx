@@ -46,7 +46,7 @@ const RegisterForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        "https://sih-project-xtmx.onrender.com/api/auth/register",
         formData
       );
       toast.success(response.data.message);
