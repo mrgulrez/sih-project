@@ -21,7 +21,7 @@ const EmailVerification = () => {
 
   const verifyEmail = async (token) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/auth/verify-email?token=${token}`);
+      const response = await axios.get(`https://sih-project-xtmx.onrender.com/api/auth/verify-email?token=${token}`);
       setStatusMessage(response.data.message);
       toast.success(response.data.message);
       navigate(response.data.redirectUrl);
