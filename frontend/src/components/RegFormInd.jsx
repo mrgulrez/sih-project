@@ -41,7 +41,7 @@ const RegFormInd = () => {
     const formData = { name, dob, email, password };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/individual/register', formData);
+      const response = await axios.post('https://sih-project-xtmx.onrender.com/api/individual/register', formData);
       setMessage(response.data.message);
       toast.success(response.data.message);
 
