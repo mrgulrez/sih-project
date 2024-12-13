@@ -59,7 +59,7 @@ const VerifyDash = () => {
 
   const fetchAssociatedDocuments = async (uniqueID) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/documents/${uniqueID}`);
+      const response = await axios.get(`https://sih-project-xtmx.onrender.com/api/documents/${uniqueID}`);
 
 
       console.log(response.data);
