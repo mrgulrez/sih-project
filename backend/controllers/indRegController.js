@@ -55,7 +55,7 @@ export const registerIndividual = async (req, res) => {
       },
     });
 
-    const verificationUrl = `http://localhost:5173/verify-email?token=${verificationToken}`;
+    const verificationUrl = `https://sih-hack-a7xz.onrender.com/verify-email?token=${verificationToken}`;
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
