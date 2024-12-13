@@ -43,7 +43,7 @@ const VerifyDash = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/documents/verify",
+        "https://sih-project-xtmx.onrender.com/api/documents/verify",
         formData,
         {
           headers: {
